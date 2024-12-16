@@ -1,0 +1,99 @@
+/* General Styles */
+html, body {
+    height: 100%; /* Ensure the page takes full height */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #003366;
+    color: white;
+    height: 60px; /* Increase height for better visibility */
+    padding: 10px 20px; /* Add padding for spacing */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 99%; /* Ensure it spans the full width */
+    z-index: 1000; /* Keep it on top of other content */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for a modern look */
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo and text */
+}
+
+header .logo img {
+    width: 50px; /* Adjust logo size */
+    height: auto;
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+header .logo h1 {
+    font-size: 1.8rem; /* Increase font size for better visibility */
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Space between navigation items */
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    position: relative; /* For hover effects */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem; /* Adjust font size */
+    padding: 10px 15px; /* Add padding for clickable area */
+    border-radius: 5px; /* Rounded corners for links */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle background highlight */
+    color: #ffcc00; /* Highlight text color */
+}
+
+main {
+    padding: 20px;
+    margin-top: 60px; /* Adjust to avoid content being hidden under the fixed header */
+    flex: 1; /* Allow main content to take up remaining space */
+}
+
+/* Footer Section */
+footer {
+    background-color: #003366;
+    color: white;
+    height: 80px;
+    padding: 5px;
+    text-align: center;
+    margin-top: auto; /* Push footer to the bottom */
+}
+
+footer .social-media a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+/* Hover effect for links and buttons */
+nav ul li a:hover, footer .social-media a:hover {
+    color: #00509e; /* Change link color on hover */
+}
+
+.found-item-card button:hover, .claim-info button:hover {
+    background-color: #00509e; /* Change button color on hover */
+}
