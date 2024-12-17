@@ -1,0 +1,47 @@
+/* General Audit Logs Section */
+.audit-logs {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+.audit-logs h2 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.audit-logs table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.audit-logs th, .audit-logs td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.audit-logs th {
+    background-color: #003366;
+    color: white;
+}
+
+.audit-logs tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.audit-logs tr:hover {
+    background-color: #e3efff;
+}
+
+/* Responsive Design for Audit Logs */
+@media (max-width: 768px) {
+    .audit-logs table {
+        display: block;
+        overflow-x: auto;
+    }
+}
