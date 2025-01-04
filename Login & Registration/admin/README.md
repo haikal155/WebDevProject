@@ -2,6 +2,29 @@
 
 A web-based system for managing lost and found items in railway stations, featuring role-based access control and two-factor authentication.
 
+## Project Structure
+```
+LOGIN & REGISTRATION/
+├── config/
+│   └── email_config.php      # Email configuration settings
+├── lib/
+│   └── PHPMailer/
+│       └── src/              # PHPMailer library core files
+│           ├── DSNConfigurator.php
+│           ├── Exception.php
+│           ├── OAuth.php
+│           ├── OAuthTokenProvider.php
+│           ├── PHPMailer.php
+│           ├── POP3.php
+│           └── SMTP.php
+├── db_connection.php         # Database connection handler
+├── forgot_password.php       # Password recovery functionality
+├── login.php                 # User authentication
+├── register.php              # New user registration
+├── reset_password.php        # Password reset functionality
+└── verify_code.php          # 2FA code verification
+```
+
 
 ## Email Configuration
 
