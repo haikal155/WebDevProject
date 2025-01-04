@@ -1,0 +1,106 @@
+<?php
+session_start();
+include 'db_connection.php';
+
+// Check if the user is logged in and has the right role
+if (!isset($_SESSION['temp_user_id']) || $_SESSION['temp_user_role'] !== 'staff') {
+    header('Location: login.php');
+    exit;
+}
+
+$conn = getDatabaseConnection();
+$sql = "SELECT * FROM audit_logs ORDER BY timestamp DESC";
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="customer.css">
+    <title>Audit Logs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .login-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Audit Logs</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo htmlspecialchars($row['action']); ?></td>
+                            <td><?php echo htmlspecialchars($row['timestamp']); ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr><td colspan="3">No audit logs found.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+
+        <a href="staff_dashboard.php" class="back-link">Back to Dashboard</a>
+    </div>
+
+    <footer style="text-align:center; margin-top:20px;">
+        &copy; 2024 Railway Lost and Found. All rights reserved.
+    </footer>
+
+    <?php
+    $conn->close();
+    ?>
+</body>
+</html>
