@@ -1,0 +1,83 @@
+<?php
+session_start();
+include 'db_connection.php';
+
+// Check if the user is logged in and has the right role
+if (!isset($_SESSION['temp_user_id']) || $_SESSION['temp_user_role'] !== 'staff') {
+    header('Location: login.php');
+    exit;
+}
+
+// Fetch relevant data for the dashboard
+$conn = getDatabaseConnection();
+$sql = "SELECT COUNT(*) AS total_users FROM users";
+$result = $conn->query($sql);
+$totalUsers = $result->fetch_assoc()['total_users'];
+
+$sql = "SELECT COUNT(*) AS total_requests FROM lost_items"; // Example table for lost items
+$result = $conn->query($sql);
+$totalRequests = $result->fetch_assoc()['total_requests'];
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="customer.css">
+    <title>Staff Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .login-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-info {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Staff Dashboard</h2>
+
+        <div class="dashboard-info">
+            <p>Total Users: <?php echo htmlspecialchars($totalUsers); ?></p>
+            <p>Total Lost Item Requests: <?php echo htmlspecialchars($totalRequests); ?></p>
+        </div>
+
+        <a href="audit_logs.php" class="back-link">View Audit Logs</a><br />
+        <a href="logout.php" class="back-link">Logout</a> <!-- Add a logout link -->
+    </div>
+
+    <footer style="text-align:center; margin-top:20px;">
+        &copy; 2024 Railway Lost and Found. All rights reserved.
+    </footer>
+
+    <?php
+    $conn->close();
+    ?>
+</body>
+</html>
