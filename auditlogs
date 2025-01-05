@@ -1,0 +1,63 @@
+<?php
+session_start();
+include 'db_connection.php';
+
+// Check if the user is logged in and has the right role
+if (!isset($_SESSION['temp_user_id']) || $_SESSION['temp_user_role'] !== 'staff') {
+    header('Location: login.php');
+    exit;
+}
+
+$conn = getDatabaseConnection();
+$sql = "SELECT * FROM audit_logs ORDER BY timestamp DESC";
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audit Logs</title>
+    <style>
+        /* Include the same styles as in your login page */
+        /* You can copy the styles from the login page here */
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Audit Logs</h2>
+
+        <table style="width: 100%; margin-bottom: 20px;">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['username']); ?></td>
+                            <td><?php echo htmlspecialchars($row['action']); ?></td>
+                            <td><?php echo htmlspecialchars($row['timestamp']); ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr><td colspan="3">No audit logs found.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+
+        <a href="staff_dashboard.php">Back to Dashboard</a>
+    </div>
+
+    <footer>
+        &copy; 2024 Railway Lost and Found. All rights reserved.
+    </footer>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
