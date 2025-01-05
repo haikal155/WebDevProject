@@ -1,0 +1,52 @@
+<?php
+session_start();
+include 'db_connection.php';
+
+// Check if the user is logged in and has the right role
+if (!isset($_SESSION['temp_user_id']) || $_SESSION['temp_user_role'] !== 'staff') {
+    header('Location: login.php');
+    exit;
+}
+
+// Fetch relevant data for the dashboard
+$conn = getDatabaseConnection();
+$sql = "SELECT COUNT(*) AS total_users FROM users";
+$result = $conn->query($sql);
+$totalUsers = $result->fetch_assoc()['total_users'];
+
+$sql = "SELECT COUNT(*) AS total_requests FROM lost_items"; // Example table for lost items
+$result = $conn->query($sql);
+$totalRequests = $result->fetch_assoc()['total_requests'];
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard</title>
+    <style>
+        /* Include the same styles as in your login page */
+        /* You can copy the styles from the login page here */
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Staff Dashboard</h2>
+
+        <div style="margin-bottom: 20px;">
+            <p>Total Users: <?php echo htmlspecialchars($totalUsers); ?></p>
+            <p>Total Lost Item Requests: <?php echo htmlspecialchars($totalRequests); ?></p>
+        </div>
+
+        <a href="audit_logs.php">View Audit Logs</a><br />
+        <a href="logout.php">Logout</a> <!-- Add a logout link -->
+    </div>
+
+    <footer>
+        &copy; 2024 Railway Lost and Found. All rights reserved.
+    </footer>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
